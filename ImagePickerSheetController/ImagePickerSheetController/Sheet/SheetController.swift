@@ -27,7 +27,7 @@ class SheetController: NSObject {
     }()
     
     var previewCollectionView: PreviewCollectionView
-    private weak var imagePicker: ImagePickerSheetController?
+    fileprivate weak var imagePicker: ImagePickerSheetController?
     
     fileprivate(set) var actions = [ImagePickerAction]()
     

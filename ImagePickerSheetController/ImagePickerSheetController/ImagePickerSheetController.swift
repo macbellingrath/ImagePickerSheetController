@@ -20,8 +20,22 @@ public enum ImagePickerMediaType {
 
 @objc public protocol ImagePickerSheetControllerDelegate {
     
-    private lazy var sheetController: SheetController = {
-        let controller = SheetController(previewCollectionView: self.previewCollectionView, imagePicker: self)
+    @objc optional func controllerWillEnlargePreview(_ controller: ImagePickerSheetController)
+    @objc optional func controllerDidEnlargePreview(_ controller: ImagePickerSheetController)
+    
+    @objc optional func controller(_ controller: ImagePickerSheetController, willSelectAsset asset: PHAsset)
+    @objc optional func controller(_ controller: ImagePickerSheetController, didSelectAsset asset: PHAsset)
+    
+    @objc optional func controller(_ controller: ImagePickerSheetController, willDeselectAsset asset: PHAsset)
+    @objc optional func controller(_ controller: ImagePickerSheetController, didDeselectAsset asset: PHAsset)
+    
+}
+
+@available(iOS 9.0, *)
+open class ImagePickerSheetController: UIViewController {
+    
+    fileprivate lazy var sheetController: SheetController = {
+      let controller = SheetController(previewCollectionView: self.previewCollectionView, imagePicker: self)
         controller.actionHandlingCallback = { [weak self] in
             self?.dismiss(animated: true, completion: { _ in
                 // Possible retain cycle when action handlers hold a reference to the IPSC
@@ -193,14 +207,14 @@ public enum ImagePickerMediaType {
     // MARK: - Images
     
     public func resetSelection() {
-        for index in selectedImageIndices {
+        for index in selectedAssetIndices {
             supplementaryViews[index]?.selected = false
         }
-        selectedImageIndices = []
+        selectedAssetIndices = []
         sheetController.reloadActionItems()
     }
     
-    private func sizeForAsset(asset: PHAsset, scale: CGFloat = 1) -> CGSize {
+    fileprivate func sizeForAsset(_ asset: PHAsset, scale: CGFloat = 1) -> CGSize {
         let proportion = CGFloat(asset.pixelWidth)/CGFloat(asset.pixelHeight)
     
         let imageHeight = maximumPreviewHeight - 2 * previewInset
