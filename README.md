@@ -1,13 +1,14 @@
 # ImagePickerSheetController
 
-[![Twitter: @larcus94](https://img.shields.io/badge/contact-@larcus94-blue.svg?style=flat)](https://twitter.com/larcus94)
-[![License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/larcus94/ImagePickerSheetController/blob/master/LICENSE)
+[![Twitter: @lbrndnr](https://img.shields.io/badge/contact-@lbrndnr-blue.svg?style=flat)](https://twitter.com/lbrndnr)
+[![License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/lbrndnr/ImagePickerSheetController/blob/master/LICENSE)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 ## About
 ImagePickerSheetController is a component that replicates the custom photo action sheet in iMessage. It's very similar to UIAlertController which makes its usage simple and concise.
+⚠️You can also find an iOS 10 version of this library [here](https://github.com/lbrndnr/ImagePickerTrayController)⚠️
 
-![Screenshot](https://raw.githubusercontent.com/larcus94/ImagePickerSheetController/master/Screenshots/GoT.gif)
+![Screenshot](https://raw.githubusercontent.com/lbrndnr/ImagePickerSheetController/master/Screenshots/GoT.gif)
 
 ## Usage
 `ImagePickerSheetController` is similar to `UIAlertController` in its usage.
@@ -43,14 +44,22 @@ pod "ImagePickerSheetController", "~> 0.9.1"
 
 ###Carthage
 ```objc
-github "larcus94/ImagePickerSheetController" ~> 0.9.1
+github "lbrndnr/ImagePickerSheetController" ~> 0.9.1
+```
+
+You should also add two new values to your app's `Info.plist` to tell the user why you need to access the Camera and Photo Library.
+```
+<key>NSCameraUsageDescription</key>
+<string>Camera usage description</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>Photo Library usage description</string>
 ```
 
 ## Requirements
-ImagePickerSheetController is written in Swift and links against `Photos.framework`. It therefore requires iOS 8 or later.
+ImagePickerSheetController is written in Swift and links against `Photos.framework`. It therefore requires iOS 9.0 or later.
 
 ## Author
-I'm Laurin Brandner, I'm on [Twitter](https://twitter.com/larcus94).
+I'm Laurin Brandner, I'm on [Twitter](https://twitter.com/lbrndnr).
 
 ## License
 ImagePickerSheetController is licensed under the [MIT License](http://opensource.org/licenses/mit-license.php).
