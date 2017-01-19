@@ -9,24 +9,24 @@
 import Foundation
 
 public enum ImagePickerActionStyle {
-    case Default
-    case Cancel
+    case `default`
+    case cancel
 }
 
-public class ImagePickerAction {
+open class ImagePickerAction {
     
     public typealias Title = (Int) -> String
     public typealias Handler = (ImagePickerAction) -> ()
     public typealias SecondaryHandler = (ImagePickerAction, Int) -> ()
     
     /// The title of the action's button.
-    public let title: String
+    open let title: String
     
     /// The title of the action's button when more than one image is selected.
-    public let secondaryTitle: Title
+    open let secondaryTitle: Title
     
     /// The style of the action. This is used to call a cancel handler when dismissing the controller by tapping the background.
-    public let style: ImagePickerActionStyle
+    open let style: ImagePickerActionStyle
     
     private let handler: Handler?
     private let secondaryHandler: SecondaryHandler?
@@ -37,7 +37,7 @@ public class ImagePickerAction {
     public init(cancelTitle: String) {
         self.title = cancelTitle
         self.secondaryTitle = { _ in cancelTitle }
-        self.style = .Cancel
+        self.style = .cancel
         self.handler = nil
         self.secondaryHandler = nil
         self.reset = false
@@ -70,7 +70,7 @@ public class ImagePickerAction {
         self.secondaryHandler = secondaryHandler
     }
     
-    func handle(numberOfImages: Int = 0) {
+    func handle(_ numberOfImages: Int = 0) {
         if numberOfImages > 0 {
             secondaryHandler?(self, numberOfImages)
         }
@@ -81,7 +81,7 @@ public class ImagePickerAction {
     
 }
 
-func ?? (left: ImagePickerAction.Title?, right: ImagePickerAction.Title) -> ImagePickerAction.Title {
+func ?? (left: ImagePickerAction.Title?, right: @escaping ImagePickerAction.Title) -> ImagePickerAction.Title {
     if let left = left {
         return left
     }
