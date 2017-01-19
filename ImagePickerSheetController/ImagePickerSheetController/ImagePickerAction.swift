@@ -15,7 +15,7 @@ public enum ImagePickerActionStyle {
 
 public class ImagePickerAction {
     
-    public typealias Title = Int -> String
+    public typealias Title = (Int) -> String
     public typealias Handler = (ImagePickerAction) -> ()
     public typealias SecondaryHandler = (ImagePickerAction, Int) -> ()
     
@@ -40,19 +40,21 @@ public class ImagePickerAction {
         self.style = .Cancel
         self.handler = nil
         self.secondaryHandler = nil
+        self.reset = false
     }
     
     /// Initializes a new ImagePickerAction. The secondary title and handler are used when at least 1 image has been selected.
     /// Secondary title defaults to title if not specified.
     /// Secondary handler defaults to handler if not specified.
     public convenience init(title: String, secondaryTitle: String? = nil, style: ImagePickerActionStyle = .Default, reset: Bool = false, handler: Handler, secondaryHandler: SecondaryHandler? = nil) {
-        self.init(title: title, secondaryTitle: secondaryTitle.map { string in { _ in string }}, style: style, reset: reset, handler: handler, secondaryHandler: secondaryHandler)
+        self.init(title: title,
+                  secondaryTitle: secondaryTitle.map { string in string }, style: style, reset: reset, handler: handler, secondaryHandler: secondaryHandler)
     }
     
     /// Initializes a new ImagePickerAction. The secondary title and handler are used when at least 1 image has been selected.
     /// Secondary title defaults to title if not specified. Use the closure to format a title according to the selection.
     /// Secondary handler defaults to handler if not specified
-    public init(title: String, secondaryTitle: Title?, style: ImagePickerActionStyle = .Default, handler: Handler, secondaryHandler secondaryHandlerOrNil: SecondaryHandler? = nil) {
+    public init(title: String, secondaryTitle: Title?, style: ImagePickerActionStyle = .Default, handler: Handler, secondaryHandler secondaryHandlerOrNil: SecondaryHandler? = nil, reset: Bool = false) {
         var secondaryHandler = secondaryHandlerOrNil
         if secondaryHandler == nil {
             secondaryHandler = { action, _ in
